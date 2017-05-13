@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+	<appenders>
+		<!-- 控制台输出 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<!-- 文件输出 当日志文件达到100MB 自动新建文件 -->
+		<RollingFile name="RollingFile" fileName="/letv/logs/ripple-java-client.log"
+			filePattern="/letv/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+			<PatternLayout
+				pattern="%d{yyyy.MM.dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<SizeBasedTriggeringPolicy size="100 MB" />
+		</RollingFile>
+	</appenders>
+	<loggers>
+		<!--我们只让这个logger输出trace信息，其他的都是error级别 -->
+		<logger name="com.ripple" level="trace" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="RollingFile" />
+		</logger>
+		<!--我们只让这个logger输出trace信息，其他的都是error级别 -->
+		<logger name="com.le" level="trace" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="RollingFile" />
+		</logger>
+	</loggers>
+</configuration>
